@@ -194,13 +194,30 @@
     .card-desc  { font-size: 13px; color: var(--t2); line-height: 1.65; word-break: break-word; white-space: pre-wrap; }
 
     /* card images */
-    .card-imgs { display: grid; gap: 1px; margin-top: 10px; }
+    .card-imgs { display: grid; gap: 1px; margin-top: 10px; position: relative; }
     .card-imgs.n1 { grid-template-columns: 1fr; }
     .card-imgs.n2 { grid-template-columns: 1fr 1fr; }
     .card-imgs.n3 { grid-template-columns: 1fr 1fr; }
     .card-imgs.n3 img:first-child { grid-column: 1 / -1; }
-    .card-imgs img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; cursor: zoom-in; transition: opacity .15s; }
+    .card-imgs img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; cursor: zoom-in; transition: opacity .15s, filter .3s; }
     .card-imgs img:hover { opacity: .82; }
+
+    /* spoiler / nsfw blur */
+    .card-imgs.spoiler { position: relative; cursor: pointer; }
+    .card-imgs.spoiler img { filter: blur(28px) brightness(.6); pointer-events: none; }
+    .card-imgs.spoiler .spoiler-cover {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px; cursor: pointer;
+    }
+    .spoiler-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--red);
+      border: 1px solid var(--red); padding: 3px 10px;
+    }
+    .spoiler-hint { font-size: 11px; color: var(--t2); }
+    .card-imgs.revealed img { filter: none; pointer-events: auto; cursor: zoom-in; }
+    .card-imgs.revealed .spoiler-cover { display: none; }
 
     /* card footer — reactions */
     .card-footer {
@@ -431,6 +448,59 @@
     /* admin trigger */
     #mod-trigger { position: fixed; bottom: 10px; right: 14px; font-size: 10px; color: var(--t3); cursor: pointer; z-index: 50; font-family: 'JetBrains Mono', monospace; user-select: none; letter-spacing: .06em; transition: color .2s; }
     #mod-trigger:hover { color: var(--t2); }
+
+    /* nsfw checkbox in add modal */
+    .nsfw-check-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .nsfw-check-row input[type="checkbox"] {
+      width: 16px; height: 16px; accent-color: var(--red); cursor: pointer; flex-shrink: 0;
+    }
+    .nsfw-check-row label { font-size: 12px; color: var(--t2); cursor: pointer; user-select: none; }
+
+    /* ── light mode ──────────────────────────────────────── */
+
+    html.light {
+      --bg: #f5f5f5;
+      --s1: #ffffff;
+      --s2: #ebebeb;
+      --b1: #d4d4d4;
+      --b2: #bfbfbf;
+      --t1: #1a1a1a;
+      --t2: #666666;
+      --t3: #aaaaaa;
+      --red: #dc2626;
+    }
+    html.light body { color: var(--t1); }
+    html.light .lock-input { background: #fff; }
+    html.light .lock-btn { background: #1a1a1a; color: #fff; }
+    html.light .lock-btn:hover { background: #333; }
+    html.light .new-btn { background: #1a1a1a; color: #fff; }
+    html.light .new-btn:hover { background: #333; }
+    html.light .btn-post { background: #1a1a1a; color: #fff; }
+    html.light .btn-post:hover { background: #333; }
+    html.light .thread-send { background: #1a1a1a; color: #fff; }
+    html.light .thread-send:hover { background: #333; }
+    html.light .rxn-btn { border-color: rgba(0,0,0,.12); color: var(--t2); }
+    html.light .rxn-btn:hover { border-color: rgba(0,0,0,.3); color: var(--t1); }
+    html.light .rxn-btn.on { border-color: rgba(0,0,0,.4); background: rgba(0,0,0,.06); color: var(--t1); }
+    html.light .thread-btn { border-color: rgba(0,0,0,.12); color: var(--t2); }
+    html.light .thread-btn:hover, html.light .thread-btn.open { border-color: rgba(0,0,0,.3); color: var(--t1); background: rgba(0,0,0,.04); }
+    html.light .card-action-btn:hover { color: var(--t1); border-color: var(--b2); }
+    html.light .btn-cancel { border-color: rgba(0,0,0,.15); color: var(--t2); }
+    html.light .btn-cancel:hover { border-color: rgba(0,0,0,.3); color: var(--t1); }
+    html.light .inp, html.light .ta { background: #f5f5f5; border-color: rgba(0,0,0,.12); color: var(--t1); }
+    html.light .inp:focus, html.light .ta:focus { border-color: rgba(0,0,0,.35); }
+    html.light .thread-name, html.light .thread-ta { background: #f5f5f5; border-color: rgba(0,0,0,.1); color: var(--t1); }
+    html.light .thread-name:focus, html.light .thread-ta:focus { border-color: rgba(0,0,0,.3); }
+    html.light .drop-zone { border-color: var(--b2); }
+    html.light .overlay { background: rgba(255,255,255,.82); }
+    html.light .toast { background: #fff; border-color: var(--b1); color: var(--t1); }
+    html.light .profile-btn { border-color: rgba(0,0,0,.15); }
+    html.light .profile-btn:hover { border-color: rgba(0,0,0,.35); }
+    html.light .sort-btn.on { border-color: var(--b2); background: var(--s1); }
+    html.light .toggle-switch.on { background: #1a1a1a; border-color: #1a1a1a; }
+    html.light .toggle-switch.on .toggle-knob { background: #fff; }
+    html.light .spoiler-tag { color: var(--red); border-color: var(--red); }
+    html.light .lb { background: rgba(255,255,255,.96); }
   </style>
 </head>
 <body>
@@ -515,6 +585,10 @@
       </div>
       <div class="previews" id="previews"></div>
       <div class="up-prog" id="up-prog"></div>
+      <div class="nsfw-check-row">
+        <input type="checkbox" id="f-nsfw">
+        <label for="f-nsfw">mark images as nsfw / spoiler</label>
+      </div>
     </div>
     <div class="modal-foot">
       <span class="cd-msg" id="cd-msg"></span>
@@ -607,6 +681,19 @@
     </div>
 
     <div class="settings-section">
+      <div class="settings-section-title">theme</div>
+      <div class="settings-toggle-row" style="border-bottom:none">
+        <div>
+          <div class="settings-toggle-label">light mode</div>
+          <div class="settings-toggle-sub">switch to a light color scheme</div>
+        </div>
+        <div class="toggle-switch" id="theme-toggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
       <div class="settings-section-title">data</div>
       <div class="settings-toggle-row">
         <div>
@@ -679,6 +766,7 @@ var settings = {
   color:     '#eeeeee',
   bg:        'void',
   bgCustom:  '',
+  theme:     'dark',
   synced:    false,
 };
 
@@ -688,12 +776,14 @@ var settings = {
   try {
     var s = JSON.parse(localStorage.getItem('yrtz_settings') || '{}');
     if (s.bg) applyBg(s.bg, s.bgCustom);
-    if (s.username || s.avatar || s.color) {
+    if (s.theme === 'light') document.documentElement.classList.add('light');
+    if (s.username || s.avatar || s.color || s.theme) {
       settings.username = s.username || '';
       settings.avatar   = s.avatar   || '';
       settings.color    = s.color    || '#eeeeee';
       settings.bg       = s.bg       || 'void';
       settings.bgCustom = s.bgCustom || '';
+      settings.theme    = s.theme    || 'dark';
       settings.synced   = !!s.synced;
     }
   } catch(e) {}
@@ -910,10 +1000,12 @@ function avatarHtml(avatarUrl, author) {
   return '<div class="card-avatar">'+init+'</div>';
 }
 
-function buildImgs(urls) {
+function buildImgs(urls, isNsfw) {
   if (!urls || !urls.length) return '';
   var n = Math.min(urls.length, 3);
-  var html = '<div class="card-imgs n'+n+'">';
+  var cls = 'card-imgs n'+n + (isNsfw ? ' spoiler' : '');
+  var html = '<div class="'+cls+'">';
+  if (isNsfw) html += '<div class="spoiler-cover"><span class="spoiler-tag">nsfw</span><span class="spoiler-hint">click to reveal</span></div>';
   urls.slice(0,3).forEach(function(u){ html += '<img src="'+esc(u)+'" loading="lazy" alt="">'; });
   return html + '</div>';
 }
@@ -964,11 +1056,12 @@ function renderNote(note, prepend) {
     + '<div class="card-title">'+esc(note.title||'')+'</div>'
     + (note.content ? '<div class="card-desc">'+esc(note.content)+'</div>' : '')
     + '</div>'
-    + buildImgs(note.image_urls)
+    + buildImgs(note.image_urls, note.is_nsfw)
     + buildFooterFor(note.id);
 
   rebuildCardActions(card, note);
   wireCard(card, note);
+  wireSpoiler(card);
 
   var grid  = document.getElementById('grid');
   var empty = grid.querySelector('.empty, .dots');
@@ -1007,8 +1100,20 @@ function wireCard(card, note) {
   });
   var tb = card.querySelector('.thread-btn');
   if (tb) tb.addEventListener('click', function(){ openThread(note.id, note.title||'untitled'); });
-  card.querySelectorAll('.card-imgs img').forEach(function(img){
+  card.querySelectorAll('.card-imgs:not(.spoiler) img, .card-imgs.revealed img').forEach(function(img){
     img.addEventListener('click', function(){ openLb(img.src); });
+  });
+}
+
+function wireSpoiler(card) {
+  var sp = card.querySelector('.card-imgs.spoiler');
+  if (!sp) return;
+  sp.addEventListener('click', function() {
+    if (sp.classList.contains('revealed')) return;
+    sp.classList.add('revealed');
+    sp.querySelectorAll('img').forEach(function(img){
+      img.addEventListener('click', function(){ openLb(img.src); });
+    });
   });
 }
 
@@ -1246,6 +1351,7 @@ function closeAdd() {
   document.getElementById('drop-zone').style.display='';
   document.getElementById('up-prog').textContent='';
   document.getElementById('add-post').textContent='post it';
+  document.getElementById('f-nsfw').checked=false;
   if (window._cdTimer) { clearInterval(window._cdTimer); window._cdTimer=null; }
 }
 
@@ -1276,6 +1382,7 @@ document.getElementById('add-post').addEventListener('click', async function(){
   try { imgUrls=await uploadImgs(); } catch(e){ toast('upload failed'); btn.disabled=false; btn.textContent='post it'; return; }
   btn.textContent='posting...';
   var author = document.getElementById('f-author').value.trim() || settings.username || null;
+  var isNsfw = document.getElementById('f-nsfw').checked;
   var res = await db.from('notes').insert({
     title:       title,
     content:     document.getElementById('f-desc').value.trim()||null,
@@ -1285,6 +1392,7 @@ document.getElementById('add-post').addEventListener('click', async function(){
     fingerprint: myFp,
     avatar_url:  settings.avatar||null,
     name_color:  settings.color||'#eeeeee',
+    is_nsfw:     isNsfw,
   });
   btn.textContent='post it';
   if (res.error) { toast('post failed'); btn.disabled=false; return; }
@@ -1374,6 +1482,9 @@ function openSettings() {
   // sync toggle
   document.getElementById('sync-toggle').classList.toggle('on', !!settings.synced);
 
+  // theme toggle
+  document.getElementById('theme-toggle').classList.toggle('on', settings.theme === 'light');
+
   document.getElementById('settings-modal').classList.add('open');
 }
 
@@ -1418,6 +1529,12 @@ document.getElementById('sync-toggle').addEventListener('click', function(){
   this.classList.toggle('on');
 });
 
+// theme toggle
+document.getElementById('theme-toggle').addEventListener('click', function(){
+  this.classList.toggle('on');
+  document.documentElement.classList.toggle('light', this.classList.contains('on'));
+});
+
 // pfp upload
 document.getElementById('pfp-input').addEventListener('change', async function(){
   var f = this.files[0];
@@ -1438,12 +1555,12 @@ document.getElementById('pfp-input').addEventListener('change', async function()
 });
 
 document.getElementById('settings-cancel').addEventListener('click', function(){
-  // revert bg to saved
   applyBg(settings.bg, settings.bgCustom);
+  document.documentElement.classList.toggle('light', settings.theme === 'light');
   document.getElementById('settings-modal').classList.remove('open');
 });
 document.getElementById('settings-modal').addEventListener('click', function(e){
-  if (e.target===this) { applyBg(settings.bg,settings.bgCustom); this.classList.remove('open'); }
+  if (e.target===this) { applyBg(settings.bg,settings.bgCustom); document.documentElement.classList.toggle('light', settings.theme==='light'); this.classList.remove('open'); }
 });
 
 document.getElementById('settings-save').addEventListener('click', async function(){
@@ -1451,13 +1568,15 @@ document.getElementById('settings-save').addEventListener('click', async functio
   settings.color    = document.getElementById('s-color').value || '#eeeeee';
   settings.bg       = currentBgSelect;
   settings.bgCustom = currentBgSelect==='custom' ? (document.getElementById('s-bg-hex').value||'') : '';
+  settings.theme    = document.getElementById('theme-toggle').classList.contains('on') ? 'light' : 'dark';
   settings.synced   = document.getElementById('sync-toggle').classList.contains('on');
 
   // save to localStorage
   localStorage.setItem('yrtz_settings', JSON.stringify(settings));
 
-  // apply bg
+  // apply bg + theme
   applyBg(settings.bg, settings.bgCustom);
+  document.documentElement.classList.toggle('light', settings.theme === 'light');
 
   // update profile button
   updateProfileBtn();
@@ -1486,8 +1605,9 @@ document.getElementById('clear-data-btn').addEventListener('click', function(){
   localStorage.removeItem('yrtz_settings');
   localStorage.removeItem('yrtz_fp');
   localStorage.removeItem('yrtz_last_post');
-  settings = { username:'', avatar:'', color:'#eeeeee', bg:'void', bgCustom:'', synced:false };
+  settings = { username:'', avatar:'', color:'#eeeeee', bg:'void', bgCustom:'', theme:'dark', synced:false };
   applyBg('void');
+  document.documentElement.classList.remove('light');
   updateProfileBtn();
   document.getElementById('settings-modal').classList.remove('open');
   toast('data cleared');
@@ -1547,6 +1667,7 @@ document.addEventListener('keydown', function(e){
   document.getElementById('edit-modal').classList.remove('open');
   if (document.getElementById('settings-modal').classList.contains('open')) {
     applyBg(settings.bg, settings.bgCustom);
+    document.documentElement.classList.toggle('light', settings.theme === 'light');
     document.getElementById('settings-modal').classList.remove('open');
   }
   closeThread();
